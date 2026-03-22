@@ -1,12 +1,19 @@
-// Checkout Handler
+// Stripe checkout handler
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-const checkout = (req, res) => {
+async function handleCheckout(req, res) {
     try {
-        // Implement checkout logic here
-        res.status(200).send({ message: 'Checkout successful!' });
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: req.body.items,
+            mode: 'payment',
+            success_url: req.body.success_url,
+            cancel_url: req.body.cancel_url,
+        });
+        res.status(200).json({ id: session.id });
     } catch (error) {
-        res.status(500).send({ error: 'Checkout failed!' });
+        res.status(500).json({ error: error.message });
     }
-};
+}
 
-module.exports = checkout;
+module.exports = handleCheckout;
