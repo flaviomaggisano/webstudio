@@ -1,0 +1,1 @@
+{ "versione": 2, "costruisce": [ { "Src": "api/*.js", "uso": "@vercel/node" } ], "itinerari": [ { "SRC": "/api/checkout", "dest": "/api/checkout.js" }, { "src": "/successo", "dest": "/successo.html" }, { "Src": "/", "dest": "/index.html" } ] }
